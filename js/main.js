@@ -21,9 +21,6 @@ var map = L.map('map', {
     doubleClickZoom: false
 });
 
-
-
-
 var attrib = new L.Control.Attribution({
     position: 'bottomleft'
 });
@@ -44,6 +41,9 @@ function mapStyle(feature) {
     };
 }
 
+var cloudmade = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
 function getWorld() {
     $.ajax({
@@ -90,6 +90,7 @@ function addMarkers () {
             "type": "Feature",
             "properties": {
                 "Country": item.COUNTRY,
+                "Region": item.REGION,
                 "Community": item.COMMUNITY,
                 "Project": item.PROJECT_NAME,
                 "Sector": item.SECTOR_PRIMARY
@@ -110,11 +111,13 @@ function addMarkers () {
         fillOpacity: 0.8
     };
     $.each(points, function (pointIndex, point) {
+        var html = point.properties.Country + "<br>" + point.properties.Region + "<br>" + point.properties.Community
         L.geoJson(point, {
             pointToLayer: function (feature, latlng) {
                 return L.circleMarker(latlng, Options);
             }
-        }).addTo(map);
+        }).bindPopup(html)
+        .addTo(map);
     })
 }
 
