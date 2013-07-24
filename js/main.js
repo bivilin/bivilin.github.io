@@ -7,13 +7,49 @@ var worldColored = [];
 var selectedYearProgramData = [];
 var displayedProgramData = [];
 var formattedSectorName = "";
+var formattedProgramName = "";
+var points = [];
 
-var center = new L.LatLng(30, 30);
+$.each(arcPrograms, function(index, item) {
+    var latlng = [item.Long, item.Lat];
+    var coord = {
+        "type": "Feature",
+        "properties": {
+            "Country": item.COUNTRY,
+            "Community": item.COMMUNITY,
+            "Project": item.PROJECT_NAME,
+            "Sector": item.SECTOR_PRIMARY
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": latlng
+        }
+    }
+    points.push(coord);
+
+    var Options = {
+        radius: 5,
+        fillColor: "#FF0000",
+        color: "#FFF",
+        weight: 2.5,
+        opacity: 0.8,
+        fillOpacity: 0.8
+    };
+
+    L.geoJson(item, {
+    pointToLayer: function (feature, latlng) {
+    return L.circleMarker(latlng, Options);
+    }
+})
+    .addTo(map);
+});
+
+var center = new L.LatLng(14.21304, -67.862829);
 var bounds = new L.LatLngBounds([90, 260], [-80, -190]);
 
 var map = L.map('map', {
     center: center,
-    zoom: 1,
+    zoom: 5,
     attributionControl: false,
     maxBounds: bounds,
     doubleClickZoom: false
@@ -26,7 +62,7 @@ attrib.addAttribution('Map Data &copy; <a href="http://redcross.org">Red Cross</
 map.addControl(attrib);
 
 function resetView() {
-    map.setView(center, 1);
+    map.setView(center, 5);
 }
 
 var windowWidth = $(window).width();
@@ -46,8 +82,8 @@ info.update = function (props) {
     $.each(displayedProgramData, function (ai, program) {
         var pName = program.COUNTRY.toUpperCase();
         var imageCode = program.SECTOR_PRIMARY.toLowerCase().replace(/\s+/g, '').replace(/-/g, '').replace(/\//g, '');
-        if (pName === selectedCountry) {
-            infoPrograms += "<li class='programListItem'><img class='imageBullet' title='" + program.SECTOR_PRIMARY + "'' src=images/" + imageCode + ".png>" + program.PROJECT_NAME + "</li>";
+        if (pName === selectedCountry) {       
+            infoPrograms += "Community: " + program.COMMUNITY + "<br> <li class='programListItem'><img class='imageBullet' title='" + program.SECTOR_PRIMARY + "'' src=images/" + imageCode + ".png>" + program.PROJECT_NAME + "</li>";
             programIndicator = true;
         }
     });
@@ -198,6 +234,21 @@ function formatSectorName(option) {
         formattedSectorName = "Malaria Prevention Initiative";
     } else {
         formattedSectorName = option;
+    }
+}
+
+//changes display text in program name (not in use yet, just the function by now)
+function formatProgramName(option) {
+    if (option === "RITA") {
+        formattedProgramName = "Resilience in the Americas";
+    } else if (option === "IPA"){
+        formattedProgramName = "What IPA means?";
+    } else if (option === "CHAP"){
+        formattedProgramName = "What CHAP means?";
+    } else if (option === "OFDA"){
+        formattedProgramName = "What OFDA means?";
+    } else {
+        formattedProgramName = option;
     }
 }
 

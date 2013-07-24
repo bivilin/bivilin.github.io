@@ -3,8 +3,8 @@
 	<head>
 		<title>American Red Cross Programs</title>
 		<meta property="og:image" content="images/redCross.png" />
-		<meta property="og:title" content="American Red Cross International Programs" />
-		<meta property="og:description" content = "Interactice map showing ARC international programs!" />
+		<meta property="og:title" content="American Red Cross Caribbean Programs" />
+		<meta property="og:description" content = "Interactice map showing ARC caribbean programs!" />
 
 
 		<meta charset="utf-8" />
@@ -74,7 +74,7 @@
                 <p>Disclaimer</p><hr>
                 The maps on this page do not imply the expression of any opinion on the part of the American Red Cross concerning the legal status of a territory or of its authorities. Program data may not be complete for all years and all countries. </div>
 			<div id="info">
-				<img class=arclogo src="images/redcross-logo.png" /><p id="ip">International Programs</p>
+				<img class=arclogo src="images/redcross-logo.png" /><p id="ip">Caribbean Programs</p>
 				<form> 
 					View programs active in:  
 					<select id="yearInput" onchange="changeYear()">						
@@ -89,7 +89,7 @@
 				<div id="programInfo"></div>
 				<div id="zoomWorld">
 					<hr>
-					<input type="button" value="Zoom to World" onclick="resetView()">
+					<input type="button" value="Zoom to The Caribbean" onclick="resetView()">
 				</div>
 				<nav class="socialBar">
 					<ul class="social-list">
@@ -120,6 +120,7 @@
 		</div>	
 		<div id="tooltip"></div>
 		<script src="//cdn.leafletjs.com/leaflet-0.6.2/leaflet.js"></script>
+		<script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 		<script src="js/main.js"></script>		
 	</body> 	
